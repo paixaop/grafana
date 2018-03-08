@@ -122,3 +122,35 @@ plugin development.
 
 Grafana is distributed under Apache 2.0 License.
 
+## Instal from this repo
+
+Follow the instructions on [Grafana Docs](http://docs.grafana.org/project/building_from_source/) but use 
+
+    go get github.com/paixaop/grafana
+
+then rename 
+
+    mv $GOPATH/src/github.com/paixaop/grafana $GOPATH/src/github.com/grafana/grafana
+
+This will ensure that the build steps work. You will also need to set your Python version if you get any python errors during the build phase. 
+
+    cd $GOPATH/src/github.com/grafana/grafana
+    virtualevn -p /usr/bin/python2.7 python
+    source ./python/bin/activate
+    npm install --only=dev
+
+    npm run watch
+
+If you get To many files open errors when running `bra run` do
+
+   ulimit -n 10000
+
+For development keep two shells open and run
+
+    shell1> npm run watch
+    shell2> bra run
+
+During plugin development you may want to run grunt on every file save. If so from your plugin directory
+
+    cd $GOPATH/src/github.com/grafana/grafana/data/plugins/<plugin-name>
+    grunt watch
